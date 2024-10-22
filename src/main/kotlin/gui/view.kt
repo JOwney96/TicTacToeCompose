@@ -3,6 +3,7 @@ package gui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,11 +11,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import repository.EWinner
 
 @Composable
 fun MainUi(viewModel: ViewModel) {
-    Box {
-        Board(viewModel)
+    MaterialTheme {
+        Column {
+            Board(viewModel)
+            NewGameButton(viewModel)
+            WinnerText(viewModel)
+        }
+    }
+}
+
+@Composable
+fun WinnerText(viewModel: ViewModel) {
+    val text: String
+    if (viewModel.uiState.winner != EWinner.NONE) {
+        text = when (viewModel.uiState.winner) {
+            EWinner.PLAYER -> "Player Won"
+            EWinner.COMPUTER -> "Computer Won"
+            EWinner.TIE -> "Tie"
+            EWinner.NONE -> "No winner yet"
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text)
+        }
+    }
+}
+
+@Composable
+fun NewGameButton(viewModel: ViewModel) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Button(onClick = { viewModel.newGameClickHandler() }) {
+            Text("New Game")
+        }
     }
 }
 

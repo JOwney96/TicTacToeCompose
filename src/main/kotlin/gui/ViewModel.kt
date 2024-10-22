@@ -12,6 +12,12 @@ class ViewModel(private val repo: Repository) {
     fun gameButtonClickHandler(row: Int, col: Int) {
         repo.addPlayerMove(row, col)
 
-        uiState = UiState(repo.immutableBoard)
+        uiState = uiState.copy(board = repo.immutableBoard, winner = repo.winner)
+    }
+
+    fun newGameClickHandler() {
+        repo.resetBoard()
+
+        uiState = uiState.copy(board = repo.immutableBoard, winner = repo.winner)
     }
 }
