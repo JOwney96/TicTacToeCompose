@@ -28,6 +28,7 @@ dependencies {
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
     implementation("com.google.guava:guava:32.1.1-jre")
+    implementation(compose.material3)
 }
 
 compose.desktop {
