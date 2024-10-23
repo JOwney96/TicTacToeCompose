@@ -59,7 +59,7 @@ public class Repository {
     }
 
     /**
-     * @return {@code true} if it can not find an open spot
+     * @return {@code true} if it cannot find an open spot
      */
     public boolean isBoardFull() {
         for (List<Character> row : board) {
@@ -200,7 +200,7 @@ public class Repository {
      * - If no strategic move is possible, choose a random empty position.<br>
      * </p>
      * If the board is in an inconsistent state and no moves are available, the method will
-     * throw a UnsupportedOperationException.
+     * throw an UnsupportedOperationException.
      *
      * @throws UnsupportedOperationException if no moves are available.
      */
@@ -248,7 +248,7 @@ public class Repository {
             }
         }
 
-        // computerMove shouldn't be called on a full board
+        // computerMove shouldn't be called on a full board,
         //  so the only reason we can't find a smart or dumb move is because
         //  something is wrong and our environment isn't known or predictable.
         if (dumbMoves.isEmpty()) {
@@ -280,7 +280,7 @@ public class Repository {
     private int @NotNull [] findMove(Character playerToken, Character computerToken) {
         // Move finder works defensively by finding and preventing a three in a row.
         // playerToken is a parameter instead of hardcoding because if you give it the
-        //  computerToken it will work offensively instead.
+        //  computerToken, it will work offensively instead.
 
         StringBuilder rowStringBuilder = new StringBuilder();
         StringBuilder colStringBuilder = new StringBuilder();
@@ -295,7 +295,7 @@ public class Repository {
                 colStringBuilder.append(board.get(col).get(row));
             }
 
-            // Get a chars stream and call
+            // Get a char stream and call
             //  and reduce it where each playerToken adds 1 and
             //  each computerToken subtracts 1.
             // This ensures that the count will be 2 only when there are 2 playerTokens and an
@@ -322,7 +322,7 @@ public class Repository {
                         return total;
                     });
 
-            // If the count is 2 then the smart move it to play a token in this line
+            // If the count is 2, then the smart move it to play a token in this line
             if (rowTokenCount == 2) {
                 for (int col = 0; col < 3; col++) {
                     if (board.get(row).get(col) == ECharToken.EMPTY.token()) {
