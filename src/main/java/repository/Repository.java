@@ -195,8 +195,8 @@ public class Repository {
      * <p>
      * The computer follows a basic strategy:<br>
      * - If possible, take the center position.<br>
-     * - If a move can block the player from winning, make that move.<br>
      * - If a move can help the computer win, make that move.<br>
+     * - If a move can block the player from winning, make that move.<br>
      * - If no strategic move is possible, choose a random empty position.<br>
      * </p>
      * If the board is in an inconsistent state and no moves are available, the method will
@@ -215,23 +215,23 @@ public class Repository {
         int colPos;
         int[] pair;
 
-        // Find a defensive move
-        pair = findMove(ECharToken.PLAYER.token(), ECharToken.COMPUTER.token());
-        rowPos = pair[0];
-        colPos = pair[1];
-
-        // If either are -1 then we couldn't find any "smart" moves.
-        if (rowPos != -1 && colPos != -1) {
-            board.get(rowPos).set(colPos, ECharToken.COMPUTER.token());
-            return;
-        }
-
         // Find an offensive move
         pair = findMove(ECharToken.COMPUTER.token(), ECharToken.PLAYER.token());
         rowPos = pair[0];
         colPos = pair[1];
 
-        // If either are -1 then we couldn't find any "smart" moves.
+        // If either is -1 then we couldn't find any "smart" moves.
+        if (rowPos != -1 && colPos != -1) {
+            board.get(rowPos).set(colPos, ECharToken.COMPUTER.token());
+            return;
+        }
+
+        // Find a defensive move
+        pair = findMove(ECharToken.PLAYER.token(), ECharToken.COMPUTER.token());
+        rowPos = pair[0];
+        colPos = pair[1];
+
+        // If either is -1 then we couldn't find any "smart" moves.
         if (rowPos != -1 && colPos != -1) {
             board.get(rowPos).set(colPos, ECharToken.COMPUTER.token());
             return;
