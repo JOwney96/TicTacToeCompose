@@ -24,6 +24,13 @@ hs_err_pid*
 replay_pid*
 
 .gradle/
-.idea/
 .kotlin/
 build/
+out/
+
+# Project-specific files
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/vcs.xml
