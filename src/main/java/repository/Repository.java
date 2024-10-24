@@ -4,16 +4,56 @@ import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class Repository {
+    private static final String FILE_NAME = "stats.bin";
     private List<List<Character>> board;
+    private Statistics stats;
 
     public Repository() {
         this.createBoard();
+
+        try {
+            stats = Statistics.loadFromFile(FILE_NAME);
+        } catch (Exception e) {
+            stats = new Statistics();
+        }
+    }
+
+    /**
+     * @return a copy of {@link Statistics}
+     * <br>
+     * Note: This can become stale
+     */
+    public Statistics getStats() {
+        return new Statistics(stats.wins, stats.loses, stats.ties);
+    }
+
+    /**
+     * Checks if the stats file exists and deletes it along with resetting the wins, loses, and ties back to zero.
+     *
+     * @throws RuntimeException if the file exists, but we are unable to delete it.
+     */
+    public void resetStats() {
+        Path fileName = Paths.get(FILE_NAME);
+        if (Files.exists(fileName)) {
+            try {
+                Files.delete(fileName);
+            } catch (IOException e) {
+                System.err.println("Error in resetStats function");
+                throw new RuntimeException(e);
+            }
+        }
+
+        stats = new Statistics();
     }
 
     /**
@@ -24,10 +64,30 @@ public class Repository {
             board.get(row).set(col, ECharToken.PLAYER.token());
 
             if (isGameOver()) {
+                EWinner winner = getWinner();
+                if (winner == EWinner.PLAYER) {
+                    stats.wins++;
+                } else if (winner == EWinner.COMPUTER) {
+                    stats.loses++;
+                } else {
+                    stats.ties++;
+                }
+
                 return;
             }
 
             computerMove();
+
+            if (isGameOver()) {
+                EWinner winner = getWinner();
+                if (winner == EWinner.PLAYER) {
+                    stats.wins++;
+                } else if (winner == EWinner.COMPUTER) {
+                    stats.loses++;
+                } else {
+                    stats.ties++;
+                }
+            }
         }
     }
 

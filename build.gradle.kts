@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("java")
 }
 
 group = "com.jowney"
@@ -29,6 +30,15 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("com.google.guava:guava:32.1.1-jre")
     implementation(compose.material3)
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:2.3.2")
+    implementation("org.glassfish.jaxb:jaxb-runtime:2.3.2")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 compose.desktop {
