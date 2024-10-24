@@ -16,6 +16,15 @@ import androidx.compose.ui.zIndex
 import gui.theme.AppTheme
 import repository.EWinner
 
+/**
+ * A Composable function representing the main UI layout of the application.
+ *
+ * This function sets the theme using [AppTheme] and organizes the UI components
+ * in a vertical arrangement using a [Column]. The components displayed include
+ * [Statistics], [Board], [NewGameButton], [ResetStatsButton], and [WinnerText].
+ *
+ * @param viewModel The ViewModel instance that manages the UI states and handles user interactions.
+ */
 @Composable
 fun MainUi(viewModel: ViewModel) {
     AppTheme {
@@ -33,6 +42,11 @@ fun MainUi(viewModel: ViewModel) {
     }
 }
 
+/**
+ * A Composable function that displays game statistics including wins, loses, and ties.
+ *
+ * @param viewModel The ViewModel instance that holds the UI state with the statistics data.
+ */
 @Composable
 fun Statistics(viewModel: ViewModel) {
     val stats = viewModel.uiState.stats
@@ -57,6 +71,14 @@ fun Statistics(viewModel: ViewModel) {
     }
 }
 
+/**
+ * A Composable function that renders a game board with buttons representing the current state of the game.
+ *
+ * This function arranges its components in a vertical column layout, centering the content,
+ * and displaying a 3x3 grid of game buttons. Each button can be clicked to trigger an action in the ViewModel.
+ *
+ * @param viewModel The ViewModel instance managing the UI state and handling user interactions for the game.
+ */
 @Composable
 fun Board(viewModel: ViewModel) {
     Column(
@@ -88,6 +110,12 @@ fun Board(viewModel: ViewModel) {
     }
 }
 
+/**
+ * Composable function to create a game button with specified text and click action.
+ *
+ * @param text The text to display on the button.
+ * @param onClick The callback to trigger when the button is clicked.
+ */
 @Composable
 fun GameButton(text: String, onClick: () -> Unit) {
     Button(
@@ -102,6 +130,14 @@ fun GameButton(text: String, onClick: () -> Unit) {
     }
 }
 
+/**
+ * A Composable function that creates a button to start a new game.
+ *
+ * This function places a Button in the center of a horizontally arranged Row.
+ * When the button is clicked, it invokes the ViewModel's `newGameClickHandler` method to reset the game board and start a new game.
+ *
+ * @param viewModel The ViewModel instance that manages the UI state and handles the click event for starting a new game.
+ */
 @Composable
 fun NewGameButton(viewModel: ViewModel) {
     Row(
@@ -115,6 +151,15 @@ fun NewGameButton(viewModel: ViewModel) {
     }
 }
 
+/**
+ * A Composable function that displays the winning status of the game.
+ *
+ * This function checks the `winner` state from the given [ViewModel]'s `uiState`
+ * and displays a corresponding message such as "Player Won", "Computer Won", or "Tie".
+ * The message is displayed within a styled box centered in a row.
+ *
+ * @param viewModel The ViewModel instance that manages the UI state and holds the game outcome.
+ */
 @Composable
 fun WinnerText(viewModel: ViewModel) {
     val text: String
@@ -147,6 +192,13 @@ fun WinnerText(viewModel: ViewModel) {
     }
 }
 
+/**
+ * A Composable function that renders a button for resetting game statistics.
+ *
+ * This button, when clicked, triggers the `resetStatsClickHandler` function in the provided `viewModel`.
+ *
+ * @param viewModel The ViewModel instance that manages the UI state and provides the method for resetting statistics.
+ */
 @Composable
 fun ResetStatsButton(viewModel: ViewModel) {
     Button(onClick = viewModel::resetStatsClickHandler) {

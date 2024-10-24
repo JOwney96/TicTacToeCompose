@@ -13,6 +13,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The Repository class serves as a central store for handling the state of the Tic-Tac-Toe
+ * game and its statistics. It provides methods to manage and query the game board,
+ * perform moves, and save or reset game statistics.
+ */
 public class Repository {
     private static final String FILE_NAME = "stats.bin";
     private List<List<Character>> board;
@@ -226,6 +231,11 @@ public class Repository {
         return Collections.unmodifiableList(temp);
     }
 
+    /**
+     * Returns an unmodifiable 2D list representation of the current board.
+     *
+     * @return an immutable 2D list of characters representing the board state
+     */
     public ImmutableList<ImmutableList<Character>> getImmutableBoard() {
         List<ImmutableList<Character>> temp = new ArrayList<>();
 
