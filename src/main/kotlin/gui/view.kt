@@ -24,55 +24,36 @@ fun MainUi(viewModel: ViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
+            Statistics(viewModel)
             Board(viewModel)
             NewGameButton(viewModel)
+            ResetStatsButton(viewModel)
             WinnerText(viewModel)
         }
     }
 }
 
 @Composable
-fun WinnerText(viewModel: ViewModel) {
-    val text: String
-    if (viewModel.uiState.winner != EWinner.NONE) {
-        text = when (viewModel.uiState.winner) {
-            EWinner.PLAYER -> "Player Won"
-            EWinner.COMPUTER -> "Computer Won"
-            EWinner.TIE -> "Tie"
-            EWinner.NONE -> "No winner yet"
-        }
+fun Statistics(viewModel: ViewModel) {
+    val stats = viewModel.uiState.stats
+    val textModifier = Modifier.padding(start = 2.5.dp, end = 2.5.dp)
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Box(
-                modifier = Modifier.border(
-                    width = 1.dp, color = MaterialTheme.colorScheme.primaryContainer,
-                    shape = RoundedCornerShape(3.dp)
-                )
-            ) {
-                Text(
-                    text,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.zIndex(1.0f).padding(top = 1.dp, bottom = 1.dp, start = 5.dp, end = 5.dp)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun NewGameButton(viewModel: ViewModel) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Button(onClick = { viewModel.newGameClickHandler() }) {
-            Text("New Game")
-        }
+    Row(modifier = Modifier.padding(2.dp)) {
+        Text(
+            text = "Wins: ${stats.wins}",
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = textModifier
+        )
+        Text(
+            text = "Loses: ${stats.loses}",
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = textModifier
+        )
+        Text(
+            text = "Ties: ${stats.ties}",
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = textModifier
+        )
     }
 }
 
@@ -118,5 +99,57 @@ fun GameButton(text: String, onClick: () -> Unit) {
             .size(50.dp)
     ) {
         Text(text = text, color = Color.Black, fontSize = 20.sp)
+    }
+}
+
+@Composable
+fun NewGameButton(viewModel: ViewModel) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Button(onClick = viewModel::newGameClickHandler) {
+            Text("New Game")
+        }
+    }
+}
+
+@Composable
+fun WinnerText(viewModel: ViewModel) {
+    val text: String
+    if (viewModel.uiState.winner != EWinner.NONE) {
+        text = when (viewModel.uiState.winner) {
+            EWinner.PLAYER -> "Player Won"
+            EWinner.COMPUTER -> "Computer Won"
+            EWinner.TIE -> "Tie"
+            EWinner.NONE -> "No winner yet"
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier.border(
+                    width = 1.dp, color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = RoundedCornerShape(3.dp)
+                )
+            ) {
+                Text(
+                    text,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    modifier = Modifier.zIndex(1.0f).padding(top = 1.dp, bottom = 1.dp, start = 5.dp, end = 5.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ResetStatsButton(viewModel: ViewModel) {
+    Button(onClick = viewModel::resetStatsClickHandler) {
+        Text("Reset statistics")
     }
 }

@@ -29,6 +29,13 @@ public class Repository {
     }
 
     /**
+     * Saves the statistics to file
+     */
+    public void saveStats() {
+        stats.saveToFile(FILE_NAME);
+    }
+
+    /**
      * @return a copy of {@link Statistics}
      * <br>
      * Note: This can become stale

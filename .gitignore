@@ -34,3 +34,6 @@ out/
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/vcs.xml
+
+# Stats file (Can be .bin or .txt)
+stats.*
